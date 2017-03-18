@@ -1,0 +1,215 @@
+
+\documentclass[10pt]{amsart}
+\usepackage[top=2.5 cm, bottom=2.5 cm, left=1.05in, right=1.05in]{geometry}
+%\geometry{a4paper} % or letter or a5paper or ... etc
+% \geometry{landscape} % rotated page geometry
+\usepackage[applemac]{inputenc}
+\usepackage{amsmath,amssymb} 
+% See the ``Article customise'' template for come common customisations
+\usepackage{mathtools}   % loads »amsmath«
+\usepackage{listings}
+
+\title{HW5}
+\author{Alessandro Manzotti}
+\date{} % delete this line to display the current date
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+\maketitle
+\section{Problem 1}
+\subsection{1a}
+For a psd matrix we have that $\mathbf{v}^{t}A\mathbf{v}\ge0$. Now being A a symmetric matrix we can diagonalize it. For the spectral theorem its eigenvector $\mathbf{u}_{i}$ span the space. So let's write the vector $\mathbf{v}$ in that basis $\mathbf{v}=\sum_{i}\alpha_{i}\mathbf{u}_{i}$ where $\mathbf{u}_{i}$ is the eigevector of A of eigenvalue $\lambda_{i}$.
+So $\mathbf{v}^{t}A\mathbf{v}= \sum_{i} \alpha_{i}^{2}\lambda_{i}\ge0$ where $\lambda_{i}$ are the eigenvalues of the matrix. So from this we have $\mathbf{v}^{t}A\mathbf{v}\ge0$ iff $\lambda_{i}\ge0$ since $\alpha_{i}^{2}$ are positive numbers.
+\subsection{2b}
+By definition, if the kernel is positive the corresponding Gram matrix is a semidefinite positive matrix. 
+The elements $k(x,x)$ for any x correspond to its diagonal elements. But for psd matrix  all diagonal entries are $\ge0$. This can be seen from its definition using  $\mathbf{e}_{i}^{t}A\mathbf{e}_{i}\ge0$ where $\mathbf{e}_{i}$ is the unit vector with 1 in position i and zeros in all the others.
+
+\subsection{2c}
+Remember the connection between the psd definition of a function and the corresponding Gram matrix. Now consider two matrices:
+\[
+  \begin{bmatrix}
+    1 & 4  \\
+    4 & 1 
+  \end{bmatrix}
+\]
+This is symmetric and all the entries are positive. So if this is a Gram matrix of a kernel k $k(x,x')>0$. However this is not psd (for example its eigenvalues are not $\ge$0)
+
+Now consider the Gram matrix
+\[
+  \begin{bmatrix}
+    1 & -1  \\
+    -1 & 4 
+  \end{bmatrix}
+\]
+this has $k(x_{1},x_{2})<0$ but it can be shown to be psd (just with a general vector $\mathbf{v}=(x,y)$ and see the componenets appears only squared in $\mathbf{v}^{t}A\mathbf{v}$).
+
+\subsection{2d}
+
+Since k' is a kernel on $\mathcal{X'}$ we have 
+$\sum_{i}\sum_{j}\alpha_{i}\alpha_{j}k(\phi(x),\phi(x'))$, indeed every elements of $\mathcal{X'}$ can be written using the function from $\mathcal{X}$.
+
+Fix $s_{1}...s_{n}\in\mathcal{X'}$ and scalars $\alpha_{1}...\alpha_{n}$ and let $\{x_{1}...x_{p}\}=\{\psi(s_{1})..\psi(s_{n})\}$ with $p\le n$. With $A_{k}=\{i:\psi(s_{i})=x_{k}\}$ and $\beta_{k}=\sum_{i \in A_{k}}\alpha_{i}$.
+
+Then 
+$\sum_{i,j}\alpha_{i}\alpha_{j}K(\psi(s_{i}),\psi(s_{j}))=\sum_{k,l}\sum_{i \in A_{k}}\sum_{j \in A_{l}}\alpha_{i}\alpha_{j}K(x_{k},x_{l})=\sum_{k,l}\beta_{k}\beta_{l}K(x_{k},x_{l})\ge0$ since $K(x,x')$ is an kernel on $\mathcal{X'}$ and 
+so $K(\psi(x),\psi(x'))$ is a kernel on $\mathcal{X}$
+\subsection{2e}
+The properties that $d(u,u')\ge0$ with $=0$ only if $u=u'$ and $d(u,u')=d(u',u)$ and $d(x,y)\le d(x,z)+d(z,y)$(using Cauchy-Schwarz) comes directly from the properties of the norm on an Hilbert space.
+
+We have $d(\phi(x),\phi(x'))^{2}=\lVert\phi(x)-\phi(x')\lVert^{2}$. Because of the property of RKHS we have $\lVert\phi(x)-\phi(x')\lVert^{2}=<\phi(x)-\phi(x'),\phi(x)-\phi(x')>$, by linearity $<\phi(x),\phi(x)>+<\phi(x'),\phi(x')>-2<\phi(x),\phi(x')>=k(x,x)+k(x,x')-2k(x,x')$.
+
+So 
+
+\begin{equation}
+d(\phi(x),\phi(x'))^{2}=k(x,x)+k(x,x')-2k(x,x')
+\end{equation}
+In the same way
+\begin{equation}
+k(x,x')=(d(\phi(x),\phi(x'))^{2}-d(\phi(x),\phi(x))^{2}-d(\phi(x'),\phi(x'))^{2})/2
+\end{equation}
+
+\section{Problem 2}
+
+\subsection{2a}
+
+
+Let K1, K2 be the kernel Gram matrices of k1 and k2 and these matrices are PSD on $\mathcal{X}$. Also let $\alpha$ be any vector. we have:
+
+\begin{align*}
+ K=K1 +K2 \rightarrow \alpha^{T}K\alpha = \alpha^{T}K1\alpha+\alpha^{T}K2\alpha≥0
+\end{align*}
+
+\subsection{2b}
+This can be prove by simple concatenation:
+Let $X = (x_{1}, x_{2})^{T}$ , i.e. the concatenation of the $x_{1}$ vector with the $x_{2}$ vector.
+then:
+K(x, y) =
+
+\begin{align*}
+<X,X' >&= \left<\binom{x_{1}}{x_{1}'}\binom{x_{2}}{x_{2}'}\right> \\
+&= < x_{1}, x_{1}' > + <x_{2}, x_{2}' >\\
+&= K1(x_{1}, x_{1}') + K2(x_{2}, x_{2}')
+\end{align*}
+
+\subsection{2c}
+
+Let's define $u=\mathbf{x}/\lVert\mathbf{x}\lVert$. Then we can write the cosine kernel gram matrix as 
+$K{i,j}=<u_{i},u_{j}>$ so it can be written as $A^{T}A$ where A is a $n\times n$ matrix whose kth column is the vector $\mathbf{u_{k}}$. It follows that
+
+\begin{equation}
+<Kx,x>=<A^{t}Ax,x>=\lVert Ax \lVert \ge 0
+\end{equation}
+whence K is positive semi-definite.
+
+
+\section{Problem 3}
+The vanilla k-nearest neighborhood is simply  based on a definition of a distance in the features space. Once this has been set the closest points (in the training  set) to a testing one can be found and a classification can be done using a majority vote. 
+
+We can implement a richer set of features by using a map $\phi:\chi\rightarrow H$. The only thing we need in the new Hilbert feature space is a notion of metric. Using results 1e we can see that the distance in the new space exists and can be computed by using the kernel in the starting feature space using
+\begin{equation}
+d(\phi(x),\phi(x'))=k(x,x)+k(x,x')-2k(x,x')
+\end{equation}
+
+A possible pseudo code could be
+\begin{enumerate}
+\item Train on the training set: once we have defined the kernel we want we calcualte $k(x,x)$ for all the elements of the training set, for example $x^{t}x$ for a boring linear kernel
+\item to classify a point x' we compute $k(x,x')$ and k(x',x') and from this the distance $d(\phi(x),\phi(x'))=k(x,x)+k(x,x')-2k(x,x')$.
+\item we can sort the distances, and issue a majority vote among the N(parameter chose by the users) closest point in the training set 
+\end{enumerate}
+
+
+\section{Problem 4}
+
+\subsection{4a}
+This kernel is based on a map $\phi_{s}$ that send the string (or a document) a into the number of time the substring s appears contiguously. ``apple'' for example contains twice the mono-string or letter p, once the length 2 string ``le'' and so on. So depending on the substring length it will be similar to words like ``plea'' that contains similar substring. 
+For example, the $K_{3}('abccc','abc')=1$ because they both contains 'abc'.
+This kernel is clearly semi-positive since the lowest value is zero where none of the words a or b contains the same substring of length $k$ $\bar s$ and positive when we have a match in both.
+
+Computing the kernel correspond in finding the number of time every substring of length k in appears in a multiply by the times it appears in b. So this is close to the string search problem.
+ We start by 
+ \begin{enumerate}
+\item computing all the substring of lenght k in the first element a with their occurrence number.
+\item search this substring in and the number of time it occurs in b.
+\end{enumerate}
+
+A possible way to compute the kernel can be seen as follow.
+For simplicity of notation, we describe the binary-valued version of the feature map, though the count-valued version is similar. For each sequence $x$, collect the set of k-length subseqences into an array $A_{x}$ and sort them. Now the inner product $K_{k}(x,y)$ can be computed in linear time as a function of $\rm{length}(x ) + \rm{length}(y)$. 
+We need to scan through the 2 list and counting the number of same object.
+Thus the overall complexity of computing the kernel value is $O(n \log(n))$ in the length of the input sequences using this method.
+
+Suffix tree can be shown to be even faster.
+
+
+\subsection{4b}
+This kernel is very similar to the previous one with the difference that now the substring does not need to be contiguous and they can be gappy inside the target documents or word.
+For example string ’The cat was chased by the fat dog’ can be seen to contain, among others, the following gapped substrings of length 3 ``tea'' ``ted'' ``dog''.
+
+This definition does not make a difference between occurrences that contain few gaps and those that contain several gaps, or the lengths thereof; all contribute to the feature value equally. For example, the substring ’tea’ will have a high weight as it occurs many times in the text, although it never occurs with fewer than two gaps and the total length of gaps is at least three. At the same time, ’dog’ will have much smaller weight although it occurs in the text without any gaps.
+
+i) In this case k=1 so we are basically looking for single letter occurrence in the 2 strings.
+
+I would probably take the string a and b and order them alphabetically at this point for every I can go through each list and count the number of occurrence of each letter and multiply them. 
+
+ii) In this case if I understand well we are looking for find a matching substring of length p in words that have a length p.
+
+I would use a merge-sort algorithm to sort a and b. Then I can go through the list (for i from zero to p) return zero if $sorted(a)[i]\ne sorted(b)[i]$ or return one if I go through the list without returning before the end. This might be $O(p \log p)$
+
+An $O( p)$ way could be to count the frequency of each character in the two strings and check if the two histograms match. 
+
+1. Create an array of letters in alphabet initialized with 0?s.
+2. For first string increment count of character in count array.
+3. For second string decrement the count of character from count array.
+4. Repeat steps 2 and 3 till we reach end of any string.
+5. Check if array contains only zero then strings are anagram otherwise not.
+
+Something like
+\begin{lstlisting}[frame=single]  
+function are_anagrams(string1, string2)
+
+    let counts = new int[26];
+
+    for each char c in lower_case(string1)
+        counts[(int)c]++
+
+    for each char c in lower_case(string2)
+        counts[(int)c]--
+
+    for each int count in counts
+        if count != 0
+            return 0
+
+    return 1
+\end{lstlisting}
+
+
+\section{Problem 5}
+See below hand written.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
